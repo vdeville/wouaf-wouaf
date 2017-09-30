@@ -76,6 +76,7 @@ function game() {
             if(song.valid === false){
                 console.log("game over");
                 gameOver(score);
+                clearTimeout(timer);
             } else {
                 console.log("good");
                 clearTimeout(timer);
