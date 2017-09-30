@@ -1,3 +1,4 @@
+var score = 0;
 $(document).ready(function () {
 
     updateGameStatus('Click to play', true);
@@ -11,28 +12,9 @@ $(document).ready(function () {
             updateFlashMessage('Click when dog barks !', true);
         }, 1500);
 
+        score = 0;
 
-        // Get random images and song, launch chrono
-        var chrono = randomChrono();
-        var image = randomImages();
-        var song = randomSongs();
-
-        image.valid = false;
-        song.valid = false;
-
-        console.log(image);
-        console.log(song);
-
-        // Start the timer
-        var timer = setTimeout ( function () {
-            if(image.valid === false && song.valid === false){
-                // silent
-                clearTimeout(timer);
-            } else {
-                clearTimeout(timer);
-                gameOver(1);
-            }
-        }, 1000 );
+        game();
 
     });
 
@@ -54,6 +36,61 @@ $(document).ready(function () {
 
 
 });
+
+function game() {
+    // Get random images and song, launch chrono
+    var chrono = randomChrono();
+    var chrono2 = randomChrono();
+    var image = randomImages();
+    var song = randomSongs();
+
+    clearGameCols();
+    updateFlashMessage(chrono + "s");
+
+    console.log(image);
+    console.log(song);
+
+    setTimeout(function () {
+        var uid = Math.floor(Math.random() * 1000) + "" + Math.floor(Math.random() * 1000) + "" + Math.floor(Math.random() * 1000);
+        var html = generateHtmlImageSong(image.uri, song.uri, uid);
+        console.log(uid);
+
+        var side = Math.round(Math.random());
+
+        if (side === 0) {
+            $('#game-col-1').html(html.image + html.audio);
+        } else {
+            $('#game-col-2').html(html.image + html.audio);
+        }
+
+        // Start the timer
+        var timer = setTimeout(function () {
+            console.log("timer expired");
+            gameOver(score);
+        }, chrono * 1000);
+
+        $('#' + uid).on('click', function () {
+            console.log(song);
+            if(song.valid === false){
+                console.log("game over");
+                gameOver(score);
+            } else {
+                console.log("good");
+                clearTimeout(timer);
+                score++;
+                game();
+            }
+        });
+
+    }, chrono2 * 1000);
+}
+
+function generateHtmlImageSong(img, song, uid) {
+    return {
+        "image": "<p><img src='/assets/images/" + img + "' id='" + uid + "' class='responsive-image'></p>",
+        "audio": "<audio src='/assets/songs/" + song + "' autoplay preload='auto'></audio>"
+    }
+}
 
 function clearFlash() {
     $('#flash-message').empty();
@@ -138,7 +175,7 @@ function addTopScore(score) {
     localStorage.setItem('scores', JSON.stringify(currentScores));
 }
 
-function gameOver(score){
+function gameOver(score) {
     clearGameCols();
     updateGameStatus("Game Over", true);
     updateFlashMessage("Your score: " + score);
@@ -193,7 +230,7 @@ function randomSongs() {
 }
 
 function randomChrono() {
-    var availableTimes = [0.5, 0.8, 1, 1.2, 1.8, 2, 2.2];
+    var availableTimes = [0.8, 0.9, 1, 1.2, 1.3];
 
     return availableTimes[Math.floor(Math.random() * availableTimes.length)]
 }
