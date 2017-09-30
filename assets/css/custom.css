@@ -1,0 +1,28 @@
+header {
+    padding-bottom: 50px;
+}
+
+@keyframes blink {
+    0% {opacity: 0}
+    20% {opacity: 1}
+    80% {opacity: 0}
+    100% {opacity: 0}
+}
+
+.blink{
+    animation: blink 2s infinite;
+}
+
+#game-statut {
+}
+
+.score-object {
+    text-align: center;
+}
+
+#reset-all{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
