@@ -40,3 +40,6 @@ CACHE:
 /assets/songs/8.mp3
 /assets/songs/10.mp3
 /assets/songs/11.mp3
+
+NETWORK:
+*
