@@ -47,13 +47,9 @@ function game() {
     clearGameCols();
     updateFlashMessage(chrono + "s");
 
-    console.log(image);
-    console.log(song);
-
     setTimeout(function () {
         var uid = Math.floor(Math.random() * 1000) + "" + Math.floor(Math.random() * 1000) + "" + Math.floor(Math.random() * 1000);
         var html = generateHtmlImageSong(image.uri, song.uri, uid);
-        console.log(uid);
 
         var side = Math.round(Math.random());
 
@@ -65,12 +61,18 @@ function game() {
 
         // Start the timer
         var timer = setTimeout(function () {
-            console.log("timer expired");
-            gameOver(score);
+            console.log(song);
+            if (song.valid === false){
+                console.log("good");
+                score++;
+                game();
+            } else {
+                console.log("timer expired");
+                gameOver(score);
+            }
         }, chrono * 1000);
 
         $('#' + uid).on('click', function () {
-            console.log(song);
             if(song.valid === false){
                 console.log("game over");
                 gameOver(score);
@@ -151,7 +153,7 @@ function generateHtmlScore(score) {
     var datestring = String("00" + d.getDay()).slice(-2) + "/" + String("00" + d.getMonth()).slice(-2);
     return "<p class='score-object'><strong>User:</strong> " + score.user + "<br />" +
         "<strong>Score:</strong> " + score.score + "<br />" +
-        "<strong>Date :</strong> " + datestring +
+        "<strong>Date:</strong> " + datestring +
         "</p>"
 }
 

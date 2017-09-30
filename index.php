@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/assets/css/eighties.css">
     <link rel="stylesheet" href="/assets/css/custom.css">
 
+    <link rel="icon" href="favicon.ico">
+
     <base href="//<?= $_SERVER['HTTP_HOST'] ?>">
 
     <link href="https://fonts.googleapis.com/css?family=Ropa+Sans:400,400i" rel="stylesheet">
@@ -22,7 +24,7 @@
 <header class="text-center vertical-center">
     <div class="small-container">
         <h1>Wouaf Wouaf</h1>
-        <p>Wouaf wouaf is a simple stupid game<br />Click when you see animals in perfect time !</p>
+        <p>Wouaf wouaf is a simple stupid game<br />Click when you hear dog bark ! (Yeah just this !)</p>
         <p>
             <a id="play" class="button">Start game</a>
             <a id="scores" class="button">View score table</a>
