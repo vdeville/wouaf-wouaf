@@ -1,0 +1,36 @@
+kind: pipeline
+type: docker
+name: build-docker
+
+steps:
+  - name: publish
+    image: plugins/docker
+    settings:
+      tags: latest
+      username:
+        from_secret: registry_login
+      password:
+        from_secret: registry_password
+      repo: 
+        from_secret: registry_repo
+      registry:
+        from_secret: registry_address
+    commands: []
+    when:
+      event:
+        - tag
+
+  - name: send telegram notification
+    image: appleboy/drone-telegram
+    commands: []
+    settings:
+      token:
+        from_secret: telegram_bot_id
+      to:
+        from_secret: telegram_channel_id
+    when:
+      event:
+        - tag
+      status:
+        - success
+        - failure
