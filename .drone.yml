@@ -16,9 +16,6 @@ steps:
       registry:
         from_secret: registry_address
     commands: []
-    when:
-      event:
-        - tag
 
   - name: send telegram notification
     image: appleboy/drone-telegram
@@ -29,8 +26,6 @@ steps:
       to:
         from_secret: telegram_channel_id
     when:
-      event:
-        - tag
       status:
         - success
         - failure
